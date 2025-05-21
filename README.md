@@ -4,7 +4,7 @@ A fully functional **e-commerce web application** built with:
 
 - **Backend:** Django & Django REST Framework (DRF)
 - **Frontend:** Quasar Framework (Vue.js)
-- **Database:** PostgreSQL (or your DB of choice)
+- **Database:** PostgreSQL 
 - **Authentication:** JWT-based auth (secure login/register)
 - **Admin:** Django Admin for product and order management
 

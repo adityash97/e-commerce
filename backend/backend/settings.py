@@ -27,7 +27,8 @@ DEBUG = True
 APPEND_SLASH = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = "user_auth.UserAuth"
+APPEND_SLASH=True
 
 # Application definition
 
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'rest_framework',
     'home',
+    'user_auth',
 ]
 
 MIDDLEWARE = [

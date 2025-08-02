@@ -1,17 +1,31 @@
 "use client";
 import { useState } from "react";
-import { Button } from "flowbite-react";
-export default function login() {
+import { postAPI } from "@/app/_client_api";
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false)
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (rememberMe) {
+      console.log("Handle logic of remember me")
+    }
+    const loginUrl = 'auth/login/'
+    const response = await postAPI(loginUrl, { email, password })
+    console.log("You have logged  : ", response)
+  }
+
 
   return (
     <>
       <div className="bg-[url('/img/mountains.jpg')] bg-cover bg-center h-screen flex items-center justify-center">
         <div className=" w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-2xl dark:text-white">
-            Welcome Back
-          </h1>
+          <div className="flex items-center justify-start">
+
+            <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-2xl dark:text-white">
+              Welcome Back
+            </h1>
+          </div>
 
           <div className="flex flex-row">
             <div className="col">
@@ -66,7 +80,7 @@ export default function login() {
             </span>
           </div>
 
-          <form className="space-y-6" action="#">
+          <form className="space-y-6" onSubmit={handleLogin}>
             <h5 className="text-xl font-medium text-gray-900 dark:text-white">
               Sign in to our platform
             </h5>
@@ -81,6 +95,8 @@ export default function login() {
                 type="email"
                 name="email"
                 id="email"
+                value={email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 placeholder="name@company.com"
                 required
@@ -97,7 +113,9 @@ export default function login() {
                 type="password"
                 name="password"
                 id="password"
+                value={password}
                 placeholder="••••••••"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
@@ -108,7 +126,8 @@ export default function login() {
                   <input
                     id="remember"
                     type="checkbox"
-                    value=""
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
                     className="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                     required
                   />
@@ -116,6 +135,7 @@ export default function login() {
                 <label
                   htmlFor="remember"
                   className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+
                 >
                   Remember me
                 </label>
@@ -136,7 +156,7 @@ export default function login() {
             <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?{" "}
               <a
-                href="#"
+                href="/register"
                 className="text-blue-700 hover:underline dark:text-blue-500"
               >
                 Create account

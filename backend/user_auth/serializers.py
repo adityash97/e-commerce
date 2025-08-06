@@ -29,6 +29,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
         email = serializers.EmailField(required=True, write_only=True)
         password = serializers.CharField(required=True, write_only=True)
-
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAuth
+        fields =['id','email','username','user_permissions','groups']
         
         

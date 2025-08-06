@@ -1,11 +1,10 @@
 from django.db import models
-
+from user_auth.models import UserAuth
 
 class BaseModel(models.Model):
     id = models.AutoField(primary_key=True)
     on_created = models.DateTimeField(auto_now_add=True)
     on_modified = models.DateTimeField(auto_now=True)
-
     class Meta:
         abstract = True
 
@@ -60,4 +59,7 @@ class Item(BaseModel):
     def __str__(self):
         classfications = ", ".join([obj.classification for obj in self.item_belongs_to.all()])
         return f"{self.name} - {classfications}"
-        
+
+class Cart(BaseModel):
+    user = models.ForeignKey(UserAuth,on_delete=models.DO_NOTHING)
+    product_url = models.JSONField(default=[])

@@ -1,7 +1,14 @@
-const baseurl = 'http://127.0.0.1:8000/'
-export const postAPI = async(url: string, payload : object) =>{
-    try{
-    const actualUrl = baseurl + url
+const baseurl = 'http://127.0.0.1:8000/' //change base url for backend call on prod
+
+export const postAPI = async(url: string, payload : object,doNotIncludeBaseUrl:boolean = false) =>{
+  let actualUrl; 
+  if (doNotIncludeBaseUrl){
+
+         actualUrl = url
+      }else{
+         actualUrl = baseurl + url
+      } 
+  try{
     const resposne  = await fetch(actualUrl, 
           { 
             method:'POST',
@@ -17,14 +24,20 @@ export const postAPI = async(url: string, payload : object) =>{
   }
 
 
-export const getAPI = async(url: string, payload : object) =>{
-    const actualUrl = baseurl + url
+export const getAPI = async(url: string="",doNotIncludeBaseUrl:boolean = false) =>{
+    let actualUrl;  
+    if (doNotIncludeBaseUrl){
+        actualUrl = url
+    }else{
+        actualUrl = baseurl + url
+    }
+
     try{
+      
     const resposne  = await fetch(actualUrl, 
           { 
             method:'GET',
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(payload)
+            headers:{"Content-Type":"application/json"}
           });
         const data = await resposne.json()
         return data
